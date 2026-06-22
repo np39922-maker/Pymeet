@@ -1,0 +1,21 @@
+services:
+  caddy-local:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      LAN_IP: ${LAN_IP:?Set LAN_IP in .env}
+    ports:
+      - "${HTTPS_PORT:-5443}:443"
+    volumes:
+      - ./Caddyfile.local:/etc/caddy/Caddyfile:ro
+      - caddy_local_data:/data
+      - caddy_local_config:/config
+    depends_on:
+      frontend:
+        condition: service_healthy
+    networks:
+      - private
+
+volumes:
+  caddy_local_data:
+  caddy_local_config:
