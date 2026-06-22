@@ -106,8 +106,10 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
       video: config.videoDeviceId ? { deviceId: { exact: config.videoDeviceId } } : true,
     };
 
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then((stream) => {
+    const timer = setTimeout(() => {
+      if (cancelled) return;
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then((stream) => {
         if (cancelled) {
           stream.getTracks().forEach((track) => track.stop());
           return;
@@ -134,9 +136,11 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
           hasJoined.current = true;
         }
       });
+    }, 500);
 
     return () => {
       cancelled = true;
+      clearTimeout(timer);
 
       peers.current.forEach((peer) => peer.close());
       peers.current.clear();

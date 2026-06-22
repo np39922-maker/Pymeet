@@ -9,7 +9,8 @@ export function useSocket(token: string | null): Socket | null {
     return io(SOCKET_URL, {
       path: "/socket.io",
       transports: ["websocket"],
-      auth: { token }
+      auth: { token },
+      forceNew: true
     });
   }, [token]);
 
