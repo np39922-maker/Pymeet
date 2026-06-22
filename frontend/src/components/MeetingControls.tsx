@@ -57,9 +57,9 @@ function MicButton({ enabled, stream, onToggle }: { enabled: boolean; stream: Me
   return (
     <button 
       onClick={onToggle} 
-      className="flex flex-col items-center justify-center gap-1 min-w-[72px] h-full transition hover:bg-white/5 rounded-xl py-1 group"
+      className="flex flex-col items-center justify-center gap-1 min-w-[60px] sm:min-w-[72px] h-full transition hover:bg-white/5 rounded-xl py-1 group shrink-0"
     >
-      <div className={`relative flex h-12 w-12 items-center justify-center rounded-2xl transition ${enabled ? "bg-slate-800 text-white group-hover:bg-slate-700" : "bg-rose-500 text-white hover:bg-rose-600"}`}>
+      <div className={`relative flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl transition ${enabled ? "bg-slate-800 text-white group-hover:bg-slate-700" : "bg-rose-500 text-white hover:bg-rose-600"}`}>
         {enabled ? (
           <div className="relative h-6 w-6">
              {/* Base gray mic */}
@@ -78,11 +78,11 @@ function MicButton({ enabled, stream, onToggle }: { enabled: boolean; stream: Me
 
 function ControlButton({ icon: Icon, label, active, danger, onClick, badge, animate, disabled }: any) {
   return (
-    <button onClick={onClick} disabled={disabled} className={`relative flex flex-col items-center justify-center gap-1 min-w-[72px] h-full transition hover:bg-white/5 rounded-xl py-1 group ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}>
-      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition ${danger ? "bg-rose-500 text-white hover:bg-rose-600" : active ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-white group-hover:bg-slate-700"} ${animate ? "animate-pulse" : ""}`}>
-        <Icon size={24} />
+    <button onClick={onClick} disabled={disabled} className={`relative flex flex-col items-center justify-center gap-1 min-w-[60px] sm:min-w-[72px] h-full transition hover:bg-white/5 rounded-xl py-1 group shrink-0 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}>
+      <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl transition ${danger ? "bg-rose-500 text-white hover:bg-rose-600" : active ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-white group-hover:bg-slate-700"} ${animate ? "animate-pulse" : ""}`}>
+        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
       </div>
-      <span className={`text-[11px] font-semibold tracking-wide whitespace-nowrap ${danger ? "text-rose-400" : "text-slate-300"}`}>{label}</span>
+      <span className={`text-[10px] sm:text-[11px] font-semibold tracking-wide whitespace-nowrap ${danger ? "text-rose-400" : "text-slate-300"}`}>{label}</span>
       {badge > 0 && <span className="absolute right-3 top-0 flex h-5 w-5 items-center justify-center rounded-full border border-slate-900 bg-rose-500 text-[10px] font-bold text-white shadow-sm">{badge > 9 ? "9+" : badge}</span>}
     </button>
   );
@@ -114,8 +114,8 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
   ];
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-30 flex justify-center pb-4 pt-16 bg-gradient-to-t from-white via-white/80 dark:from-slate-950 dark:via-slate-950/80 to-transparent pointer-events-none px-2">
-      <div className="pointer-events-auto flex flex-wrap justify-center items-center gap-1 sm:gap-2 rounded-[2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 p-2 px-3 shadow-2xl backdrop-blur-2xl max-w-full">
+    <div className="fixed bottom-0 left-0 right-0 z-30 flex justify-center pb-2 sm:pb-4 pt-16 bg-gradient-to-t from-white via-white/80 dark:from-slate-950 dark:via-slate-950/80 to-transparent pointer-events-none px-2">
+      <div className="pointer-events-auto flex overflow-x-auto hide-scrollbar items-center gap-1 sm:gap-2 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 p-2 shadow-2xl backdrop-blur-2xl max-w-full w-full sm:w-auto sm:justify-center">
         <div className="shrink-0"><MicButton enabled={micEnabled} stream={localStream} onToggle={onToggleMic} /></div>
         <div className="shrink-0"><ControlButton icon={cameraEnabled ? Video : VideoOff} label={cameraEnabled ? "Stop Video" : "Start Video"} danger={!cameraEnabled} onClick={onToggleCamera} /></div>
         
@@ -147,10 +147,10 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
         <div className="shrink-0"><ControlButton icon={MessageSquare} label="Chat" badge={unreadChatCount} onClick={() => { onToggleChat(); setShowBgPicker(false); }} /></div>
         <div className="shrink-0"><ControlButton icon={Users} label="People" badge={isHost ? unreadParticipantsCount : 0} onClick={() => { onToggleParticipants(); setShowBgPicker(false); }} /></div>
         
-        <div className="h-10 w-px bg-slate-300 dark:bg-white/10 mx-1 sm:mx-2 shrink-0" />
+        <div className="h-8 sm:h-10 w-px bg-slate-300 dark:bg-white/10 mx-1 sm:mx-2 shrink-0" />
         
-        <button onClick={onLeave} className="flex h-12 sm:h-14 items-center justify-center gap-2 rounded-[1.25rem] bg-rose-600 px-4 sm:px-6 font-semibold text-white transition hover:bg-rose-700 ml-1 sm:ml-2 shadow-lg shadow-rose-500/20 pointer-events-auto shrink-0">
-          <PhoneOff size={20} />
+        <button onClick={onLeave} className="flex h-10 sm:h-14 items-center justify-center gap-2 rounded-xl sm:rounded-[1.25rem] bg-rose-600 px-4 sm:px-6 font-semibold text-white transition hover:bg-rose-700 ml-1 sm:ml-2 shadow-lg shadow-rose-500/20 pointer-events-auto shrink-0">
+          <PhoneOff className="w-4 h-4 sm:w-5 sm:h-5" />
           Leave
         </button>
       </div>
