@@ -83,6 +83,8 @@ def _sync_end_participation(meeting_id: str, user_id: int, removed: bool = False
     db = SessionLocal()
     try:
         end_participation(db, meeting_id, user_id, removed=removed)
+    except Exception as e:
+        print(f"Failed to end participation for {user_id}: {e}")
     finally:
         db.close()
 
