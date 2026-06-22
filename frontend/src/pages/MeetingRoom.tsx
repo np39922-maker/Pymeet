@@ -221,6 +221,7 @@ export function MeetingRoom() {
             Return to Dashboard
           </button>
         </div>
+        <ReactionsOverlay reactions={reactions} />
       </div>
     );
   }
@@ -268,7 +269,11 @@ export function MeetingRoom() {
           >
             Return to Dashboard
           </button>
+          <p className="mt-6 text-sm font-medium text-slate-400">
+            Redirecting to dashboard in a few seconds...
+          </p>
         </div>
+        <ReactionsOverlay reactions={reactions} />
       </div>
     );
   }

@@ -33,14 +33,14 @@ export function ReactionsOverlay({ reactions }: { reactions: Reaction[] }) {
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: 2.5, ease: "easeOut" }}
-            className="absolute bottom-0 text-5xl drop-shadow-lg flex flex-col items-center"
+            className="absolute bottom-0 text-7xl sm:text-6xl drop-shadow-lg flex flex-col items-center"
             style={{ left: `${r.left}vw` }}
           >
             {ANIMATED_EMOJIS[r.emoji] ? (
               <img 
                 src={`https://fonts.gstatic.com/s/e/notoemoji/latest/${ANIMATED_EMOJIS[r.emoji]}/512.gif`} 
                 alt={r.emoji} 
-                className="w-16 h-16 drop-shadow-2xl" 
+                className="w-24 h-24 sm:w-20 sm:h-20 drop-shadow-2xl" 
               />
             ) : (
               r.emoji

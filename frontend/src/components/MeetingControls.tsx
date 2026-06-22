@@ -121,7 +121,7 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
         
         <div className="h-8 sm:h-10 w-px bg-slate-300 dark:bg-white/10 mx-1 shrink-0" />
         
-        {isHost && <div className="shrink-0"><ControlButton icon={MonitorUp} label="Share" active={screenSharing} onClick={onShareScreen} /></div>}
+        <div className="shrink-0"><ControlButton icon={MonitorUp} label="Share" active={screenSharing} onClick={onShareScreen} /></div>
         <div className="shrink-0"><ControlButton icon={PenTool} label="Whiteboard" onClick={() => { onToggleWhiteboard(); setShowBgPicker(false); setShowEmojiPicker(false); if(showReactions) onToggleReactions(); }} /></div>
         
         <div className="shrink-0">
@@ -175,8 +175,8 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
       )}
 
       {showEmojiPicker && showReactions && (
-        <div className="absolute bottom-full right-0 mb-4 bg-slate-900 shadow-2xl rounded-xl overflow-hidden border border-slate-700/50">
-          <EmojiPicker theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} onEmojiClick={(e: any) => onReact(e.emoji)} />
+        <div className="absolute bottom-full right-0 mb-4 bg-slate-900 shadow-2xl rounded-xl overflow-hidden border border-slate-700/50 w-[300px] sm:w-[350px]">
+          <EmojiPicker width="100%" theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} onEmojiClick={(e: any) => onReact(e.emoji)} />
         </div>
       )}
 

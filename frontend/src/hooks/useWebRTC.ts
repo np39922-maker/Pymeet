@@ -41,6 +41,8 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
           const sender = senders.find((s) => s.track?.kind === track.kind);
           if (sender) {
             sender.replaceTrack(track).catch(console.error);
+          } else {
+            try { pc.addTrack(track, finalStream); } catch(e) {}
           }
         });
       });
@@ -61,6 +63,16 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
     (processedStream || localStreamRef.current)?.getTracks().forEach((track) => pc.addTrack(track, (processedStream || localStreamRef.current) as MediaStream));
     pc.onicecandidate = (event) => {
       if (event.candidate) socket.emit("ice-candidate", { to: targetSid, candidate: event.candidate });
+    };
+    pc.onnegotiationneeded = async () => {
+      try {
+        if (pc.signalingState !== "stable") return;
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        socket.emit("offer", { to: targetSid, offer });
+      } catch (e) {
+        console.error("Negotiation error:", e);
+      }
     };
     pc.ontrack = (event) => {
       const [stream] = event.streams;
@@ -172,13 +184,19 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
       if (pc && candidate) await pc.addIceCandidate(new RTCIceCandidate(candidate));
     };
     const onLeft = ({ sid }: { sid: string }) => {
-      peers.current.get(sid)?.close();
+      const pc = peers.current.get(sid);
+      if (pc) pc.close();
       peers.current.delete(sid);
       setRemoteStreams((current) => current.filter((item) => item.sid !== sid));
       updateParticipants(participantsRef.current.filter((p) => p.sid !== sid));
     };
     socket.on("room-joined", onRoomJoined);
     socket.on("participant-list", onParticipantList);
+    socket.on("user-joined", async (payload: any) => {
+      const newUser = payload.user;
+      updateParticipants([...participantsRef.current, newUser]);
+      await callPeer(newUser.sid);
+    });
     socket.on("offer", onOffer);
     socket.on("answer", onAnswer);
     socket.on("ice-candidate", onIce);
@@ -323,16 +341,27 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
       });
 
       const newCameraTrack = cameraStream.getVideoTracks()[0];
+      const activeStream = new MediaStream([newCameraTrack, originalMicTrack]);
 
       peers.current.forEach((peer) => {
-        const videoSender = peer
-          .getSenders()
-          .find((s) => s.track?.kind === "video");
-        videoSender?.replaceTrack(newCameraTrack);
-
-        if (screenAudioTrack) {
-          const audioSender = peer.getSenders().find((s) => s.track?.kind === "audio");
-          audioSender?.replaceTrack(originalMicTrack);
+        const senders = peer.getSenders();
+      
+        if (newCameraTrack) {
+          const videoSender = senders.find((s) => s.track?.kind === "video");
+          if (videoSender) {
+            videoSender.replaceTrack(newCameraTrack).catch(console.error);
+          } else {
+            try { peer.addTrack(newCameraTrack, activeStream); } catch(e) {}
+          }
+        }
+      
+        if (originalMicTrack) {
+          const audioSender = senders.find((s) => s.track?.kind === "audio");
+          if (audioSender) {
+            audioSender.replaceTrack(originalMicTrack).catch(console.error);
+          } else {
+            try { peer.addTrack(originalMicTrack, activeStream); } catch(e) {}
+          }
         }
       });
 
