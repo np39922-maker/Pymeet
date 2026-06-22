@@ -106,7 +106,7 @@ export function ChatPanel({ meetingId, open, socket, localUser, participants = [
               <div className="relative flex gap-2">
                 {showEmojiPicker && (
                   <div className="absolute bottom-full right-0 mb-2">
-                    <EmojiPicker theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} onEmojiClick={(e) => setDraft((d) => d + e.emoji)} />
+                    <EmojiPicker theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} onEmojiClick={(e: any) => setDraft((d) => d + e.emoji)} />
                   </div>
                 )}
                 <button type="button" onClick={() => setShowEmojiPicker((v) => !v)} className="rounded-lg p-2 text-slate-400 hover:bg-white/10 hover:text-white" aria-label="Emoji">

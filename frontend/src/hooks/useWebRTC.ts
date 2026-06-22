@@ -100,7 +100,7 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
     if (!enabled || !socket || !hasInitialConfig) return;
     let cancelled = false;
     
-    const config = initialJoinConfig.current;
+    const config = initialJoinConfig.current!;
     const constraints: MediaStreamConstraints = {
       audio: config.audioDeviceId ? { deviceId: { exact: config.audioDeviceId } } : true,
       video: config.videoDeviceId ? { deviceId: { exact: config.videoDeviceId } } : true,

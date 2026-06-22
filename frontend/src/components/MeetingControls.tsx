@@ -175,8 +175,8 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
       )}
 
       {showEmojiPicker && showReactions && (
-        <div className="pointer-events-auto absolute bottom-[170px] left-1/2 -translate-x-1/2 shadow-2xl rounded-2xl overflow-hidden z-50 border border-slate-800">
-          <EmojiPicker theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} onEmojiClick={(e) => { onReact(e.emoji); setShowEmojiPicker(false); }} />
+        <div className="absolute bottom-full right-0 mb-4 bg-slate-900 shadow-2xl rounded-xl overflow-hidden border border-slate-700/50">
+          <EmojiPicker theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} onEmojiClick={(e: any) => onReact(e.emoji)} />
         </div>
       )}
 
