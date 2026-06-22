@@ -86,10 +86,18 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
     socket.emit("offer", { to: targetSid, offer });
   }, [createPeer, socket]);
 
-  const initialJoinConfig = useRef(joinConfig);
+  const initialJoinConfig = useRef<JoinConfig | null>(null);
+  const [hasInitialConfig, setHasInitialConfig] = useState(false);
 
   useEffect(() => {
-    if (!enabled || !socket || !initialJoinConfig.current) return;
+    if (joinConfig && !initialJoinConfig.current) {
+      initialJoinConfig.current = joinConfig;
+      setHasInitialConfig(true);
+    }
+  }, [joinConfig]);
+
+  useEffect(() => {
+    if (!enabled || !socket || !hasInitialConfig) return;
     let cancelled = false;
     
     const config = initialJoinConfig.current;
@@ -134,7 +142,7 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
       peers.current.clear();
       hasJoined.current = false;
     };
-  }, [enabled, meetingId, socket]);
+  }, [enabled, meetingId, socket, hasInitialConfig]);
 
   useEffect(() => {
     if (!socket) return;
