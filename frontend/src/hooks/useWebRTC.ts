@@ -244,34 +244,18 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
   };
 
   const toggleCamera = async () => {
-  if (!localStreamRef.current) return;
+    if (!localStreamRef.current) return;
+    const track = localStreamRef.current.getVideoTracks()[0];
+    if (!track) return;
 
-  const track = localStreamRef.current.getVideoTracks()[0];
-
-  if (!track) return;
-
-  // Turn OFF
-  if (track.enabled) {
-    track.enabled = false;
-    setCameraEnabled(false);
-    return;
-  }
-
-  // Turn ON
-  track.enabled = true;
-
-  peers.current.forEach((peer) => {
-    const sender = peer
-      .getSenders()
-      .find((s) => s.track?.kind === "video");
-
-    if (sender) {
-      sender.replaceTrack(track);
+    if (track.enabled) {
+      track.enabled = false;
+      setCameraEnabled(false);
+    } else {
+      track.enabled = true;
+      setCameraEnabled(true);
     }
-  });
-
-  setCameraEnabled(true);
-};
+  };
 
   const shareScreen = async () => {
   if (!localStreamRef.current) return;
