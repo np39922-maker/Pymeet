@@ -161,9 +161,9 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
           {emojis.map((emoji) => (
             <button key={emoji} onClick={() => { onReact(emoji); setShowEmojiPicker(false); }} className="transform rounded-full p-2 transition hover:scale-125 hover:bg-white/10 active:scale-95 group">
               {ANIMATED_EMOJIS[emoji] ? (
-                <img src={ANIMATED_EMOJIS[emoji]} alt={emoji} className="w-10 h-10 object-contain drop-shadow-md group-hover:drop-shadow-xl" />
+                <img src={ANIMATED_EMOJIS[emoji]} alt={emoji} className="w-12 h-12 sm:w-10 sm:h-10 object-contain drop-shadow-md group-hover:drop-shadow-xl" />
               ) : (
-                <span className="text-3xl">{emoji}</span>
+                <span className="text-4xl sm:text-3xl">{emoji}</span>
               )}
             </button>
           ))}

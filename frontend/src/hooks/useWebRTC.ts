@@ -25,6 +25,7 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
   const peers = useRef<Map<string, RTCPeerConnection>>(new Map());
   const participantsRef = useRef<RoomParticipant[]>([]);
   const localStreamRef = useRef<MediaStream | null>(null);
+  const hasJoined = useRef(false);
 
   const processedStream = useVirtualBackground(localStream, joinConfig?.backgroundType || "none", joinConfig?.backgroundSrc);
 
@@ -111,10 +112,16 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
 
         localStreamRef.current = stream;
         setLocalStream(stream);
-        socket.emit("join-room", { meetingId });
+        if (!hasJoined.current) {
+          socket.emit("join-room", { meetingId });
+          hasJoined.current = true;
+        }
       })
       .catch(() => {
-        socket.emit("join-room", { meetingId });
+        if (!hasJoined.current) {
+          socket.emit("join-room", { meetingId });
+          hasJoined.current = true;
+        }
       });
 
     return () => {
