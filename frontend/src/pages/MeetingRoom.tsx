@@ -225,6 +225,17 @@ export function MeetingRoom() {
     );
   }
 
+  // Pre-Join Screen
+  if (!joinConfig && meeting) {
+    return (
+      <PreJoinScreen
+        meetingTitle={meeting.title}
+        isHost={meeting.host.id === user?.id}
+        onJoin={(config) => setJoinConfig(config)}
+      />
+    );
+  }
+
   if (connectionState === "connecting") return <div className="bg-premium grid min-h-screen place-items-center"><div className="w-8 h-8 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div><p className="text-white mt-4">Connecting...</p></div>;
 
   if (connectionState === "waiting") return <div className="bg-premium grid min-h-screen place-items-center p-6 text-center text-white"><div><Shield className="mx-auto mb-4 text-cyan-300" size={42} /><h1 className="text-3xl font-bold">You are in the waiting room</h1><p className="mt-3 text-slate-300">The host will admit you shortly.</p></div></div>;
@@ -262,16 +273,7 @@ export function MeetingRoom() {
     );
   }
 
-  // Pre-Join Screen
-  if (!joinConfig && meeting) {
-    return (
-      <PreJoinScreen
-        meetingTitle={meeting.title}
-        isHost={meeting.host.id === user?.id}
-        onJoin={(config) => setJoinConfig(config)}
-      />
-    );
-  }
+
 
   const togglePanel = (panel: "chat" | "participants" | "reactions" | "whiteboard") => {
     setActivePanel((current) => (current === panel ? null : panel));
