@@ -86,13 +86,16 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
     socket.emit("offer", { to: targetSid, offer });
   }, [createPeer, socket]);
 
+  const initialJoinConfig = useRef(joinConfig);
+
   useEffect(() => {
-    if (!enabled || !socket || !joinConfig) return;
+    if (!enabled || !socket || !initialJoinConfig.current) return;
     let cancelled = false;
     
+    const config = initialJoinConfig.current;
     const constraints: MediaStreamConstraints = {
-      audio: joinConfig.audioDeviceId ? { deviceId: { exact: joinConfig.audioDeviceId } } : true,
-      video: joinConfig.videoDeviceId ? { deviceId: { exact: joinConfig.videoDeviceId } } : true,
+      audio: config.audioDeviceId ? { deviceId: { exact: config.audioDeviceId } } : true,
+      video: config.videoDeviceId ? { deviceId: { exact: config.videoDeviceId } } : true,
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
@@ -107,8 +110,8 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
         });
         
         // Apply initial mic/camera states
-        stream.getAudioTracks().forEach((t) => (t.enabled = joinConfig.micEnabled));
-        stream.getVideoTracks().forEach((t) => (t.enabled = joinConfig.cameraEnabled));
+        stream.getAudioTracks().forEach((t) => (t.enabled = config.micEnabled));
+        stream.getVideoTracks().forEach((t) => (t.enabled = config.cameraEnabled));
 
         localStreamRef.current = stream;
         setLocalStream(stream);
@@ -129,8 +132,9 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
 
       peers.current.forEach((peer) => peer.close());
       peers.current.clear();
+      hasJoined.current = false;
     };
-  }, [enabled, meetingId, socket, joinConfig]);
+  }, [enabled, meetingId, socket]);
 
   useEffect(() => {
     if (!socket) return;
