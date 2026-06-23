@@ -10,7 +10,10 @@ interface RemoteStream {
 }
 
 const ICE_SERVERS: RTCConfiguration = {
-  iceServers: [{ urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"] }]
+  iceServers: [
+    { urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"] },
+    { urls: "turn:openrelay.metered.ca:80", username: "openrelayproject", credential: "openrelayproject" }
+  ]
 };
 
 import type { JoinConfig } from "../components/PreJoinScreen";
@@ -164,8 +167,8 @@ export function useWebRTC(socket: Socket | null, meetingId: string, enabled: boo
     if (!socket) return;
     const onRoomJoined = async ({ participants: joined }: { participants: RoomParticipant[] }) => {
       updateParticipants(joined);
-      const others = joined.filter((p) => p.sid !== socket.id);
-      for (const participant of others) await callPeer(participant.sid);
+      // We do NOT call callPeer here. Existing participants will receive user-joined and initiate the call.
+      // This completely prevents WebRTC glare (both sides sending offers simultaneously).
     };
     const onParticipantList = ({ participants: next }: { participants: RoomParticipant[] }) => updateParticipants(next);
     const onOffer = async ({ from, offer }: { from: string; offer: RTCSessionDescriptionInit }) => {
