@@ -1,0 +1,32 @@
+======================================================
+8. CODE-LEVEL INTERVIEW QUESTIONS (Code ke andar se sawal)
+======================================================
+
+Agar interviewer seedha aapka code khol kar puche ki "Ye line kya kar rahi hai aur kyun use ki?", toh aapko ghabrana nahi hai. Yahan sabse zyada pooche jane wale code-level sawalon ke jawab hain:
+
+1. React me "useEffect" ka itna use kyu kiya hai?
+- Interviewer puchega: Aapne component me useEffect kyu lagaya?
+- Jawab: "Sir, useEffect ka use humne 'Side Effects' handle karne ke liye kiya hai. Jaise jab Dashboard load hota hai, toh mujhe backend se Meetings ka data lana hota hai (API hit karke). Agar main ise bina useEffect ke likhunga, toh React baar-baar anant (infinite) loop me API hit karta rahega. useEffect ke end me khali array `[]` lagane se API sirf ek baar call hoti hai jab page first time khulta hai."
+
+2. React me "useRef" ka use Video Tags ke liye kyu kiya? (Bahut Important!)
+- Interviewer puchega: Aapne video dikhane ke liye useState ki jagah useRef kyu use kiya (`videoRef.current.srcObject = stream`)?
+- Jawab: "Sir, useState use karne par jab bhi state change hoti hai, toh poora component 'Re-render' (dobara load) hota hai. Video stream ek live data hai. Agar component baar baar re-render hoga, toh video atak jayegi ya flickering hogi. `useRef` use karne se hum direct HTML video element (`<video>`) ko access kar paate hain bina component ko re-render kiye."
+
+3. FastAPI me "Depends(get_db)" kya karta hai?
+- Interviewer puchega: Aapke backend code me routes me `db: Session = Depends(get_db)` likha hai, iska kya matlab hai?
+- Jawab: "Ye FastAPI ka ek bahut power feature hai jise 'Dependency Injection' kehte hain. Jab bhi koi API call hoti hai, toh ye function database ka ek connection (Session) kholta hai, aur request puri hone ke baad apne aap us connection ko close (ya database me data save/commit) kar deta hai. Isse hume baar baar DB connect aur close karne ka code nahi likhna padta."
+
+4. Backend me "async def" aur "await" kyu lagaya hai?
+- Interviewer puchega: Python code me normal `def` ki jagah `async def` aur andar `await` kyu hai?
+- Jawab: "Kyunki humara app (FastAPI) Asynchronous hai. Jab hamara code kisi database ko read kar raha hota hai ya API se baat kar raha hota hai, toh usme time lagta hai. `await` lagane se Python us time me block (hang) nahi hota, balki wo peeche kisi dusre user ki request handle karne lag jata hai. Isse hamara server ek sath hazaron users ko handle kar pata hai bina slow hue."
+
+5. WebRTC me "RTCPeerConnection" ka object kyu banaya?
+- Interviewer puchega: Frontend me `new RTCPeerConnection()` line kya karti hai?
+- Jawab: "Sir, WebRTC me ye ek engine ki tarah kaam karta hai. Ye object hi hamara audio/video data pack karta hai aur directly doosre user ke computer tak pahunchane ke liye network rasta (ICE candidates) dhoondhta hai. Iske bina direct Peer-to-Peer (P2P) connection namumkin hai."
+
+6. Socket.IO me "emit" aur "broadcast" (ya to) me kya farak hai?
+- Interviewer puchega: Backend me aapne `sio.emit()` use kiya hai, iska concept kya hai?
+- Jawab: "Jab main `sio.emit('event', data)` likhta hu, toh wo message sabko jata hai. Lekin jab mujhe kisi specific 'Room' me (jaise ek particular meeting ID me) baithe logo ko message bhejna hota hai, toh main `sio.emit('event', data, room=meeting_id)` use karta hu. Isse kisi dusri meeting walo ko hamari chat ya video ka data nahi jata."
+
+PRO TIP: Agar interviewer koi aisi line puch le jo aapko bilkul yaad nahi aa rahi, toh confidence se kahin: 
+"Sir, is exact line ka syntax mujhe abhi yaad nahi hai, par iska main logical flow ye hai ki ye [A] se data lekar [B] me bhej rahi hai. As a developer, main syntax ratne se zyada logic samajhne par focus karta hu, syntax ke liye toh documentation available hai." (Ye jawab interviewer ko bahut professional lagta hai!)
