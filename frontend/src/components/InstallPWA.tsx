@@ -3,13 +3,11 @@ import { Download } from 'lucide-react';
 import { Button } from './Button';
 
 export function InstallPWA() {
-  const [supportsPWA, setSupportsPWA] = useState(false);
   const [promptInstall, setPromptInstall] = useState<any>(null);
 
   useEffect(() => {
     const handler = (e: Event) => {
       e.preventDefault();
-      setSupportsPWA(true);
       setPromptInstall(e);
     };
 
@@ -20,7 +18,10 @@ export function InstallPWA() {
 
   const onClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    if (!promptInstall) return;
+    if (!promptInstall) {
+      alert("Installation is managed by your browser.\n\nLook for the 'Install App' icon (a small computer with a downward arrow) in your browser's address bar at the top right, or check your browser's menu (three dots) for 'Install PyMeet'.\n\nIf you don't see it, you might be using an unsupported browser, incognito mode, or the app is already installed!");
+      return;
+    }
     promptInstall.prompt();
     promptInstall.userChoice.then((choiceResult: { outcome: string }) => {
       if (choiceResult.outcome === 'accepted') {
@@ -30,8 +31,6 @@ export function InstallPWA() {
       }
     });
   };
-
-  if (!supportsPWA) return null;
 
   return (
     <Button 
