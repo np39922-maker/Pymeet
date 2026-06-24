@@ -1,0 +1,18 @@
+======================================================
+1. PROJECT INTRODUCTION (Project ka Parichay)
+======================================================
+
+PyMeet kya hai?
+PyMeet ek "Video Conferencing Application" hai, bilkul Zoom ya Google Meet ki tarah. Isme multiple log ek hi room me jud sakte hain, apni video aur audio share kar sakte hain, screen share kar sakte hain, aur real-time chat kar sakte hain.
+
+Humne ise kyu banaya? (Interview me kya bolna hai?)
+"Sir/Ma'am, maine PyMeet isliye banaya kyunki main Real-time communication aur WebRTC technology ko deeply samajhna chahta tha. Video calling apps me backend aur frontend dono ko ek sath synchronously kaam karna padta hai, jo meri full-stack skills ko showcase karne ka best project hai."
+
+Project ka Flow (Ye kaam kaise karta hai?):
+1. User website par aata hai aur Login/Register karta hai.
+2. User ek naya meeting room "Create" karta hai ya kisi dost ka meeting ID daal kar "Join" karta hai.
+3. Jaise hi user room me enter karta hai, uska camera aur mic on ho jata hai (Browser ki permission se).
+4. WebRTC technology ki madad se, us user ka video baki sabhi connected users ko direct (Peer-to-Peer) bheja jata hai. Koi bhi video data hamare server par save nahi hota, jisse speed fast rehti hai aur security bani rehti hai.
+5. Jab user chahe, wo meeting leave kar sakta hai ya screen share kar sakta hai.
+
+Agli files me hum padhenge ki isme konsi technology use hui hai aur unhe kyu chuna gaya.

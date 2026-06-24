@@ -1,0 +1,28 @@
+======================================================
+2. FRONTEND TECHNOLOGIES (UI/UX ke tools)
+======================================================
+
+1. React (JavaScript Library)
+- Kya hai: UI (User Interface) banane ka sabse popular tool.
+- Kyu use kiya: React me code ko chhote "Components" (jaise Navbar, Button, VideoPlayer) me todna aasan hota hai. Ise code maintain karna simple ho jata hai.
+- Alternative (Humne aur kya use kar sakte the?): Angular ya Vue.js. Par React ki community bahut badi hai aur WebRTC ke liye isme libraries asani se mil jati hain.
+
+2. TypeScript
+- Kya hai: Ye JavaScript ka ek bada bhai hai. JavaScript me hum koi bhi value kisi bhi variable me daal sakte hain (jisse errors aate hain), par TypeScript me hum strict "Types" (jaise string, number) batate hain.
+- Kyu use kiya: Interviewer ko batana ki "TypeScript se code likhte time hi errors pakde jate hain, jisse production app break nahi hota."
+
+3. Vite (Build Tool)
+- Kya hai: Ye React app ko start aur build karne ka tool hai.
+- Kyu use kiya: Pehle log 'Create-React-App' ya 'Webpack' use karte the, par wo bahut slow the. Vite instantly server start karta hai aur development bahut fast kar deta hai.
+
+4. TailwindCSS
+- Kya hai: Ek CSS framework jisme hume alag se CSS files nahi likhni padti, direct HTML classes me styling ho jati hai.
+- Kyu use kiya: Normal CSS likhne me bahut time lagta hai aur code mess ho jata hai. Tailwind se humne premium aur modern SaaS design (Dark mode, glass effects) bahut jaldi bana liya. Bootstrap use kar sakte the, par Bootstrap purana lagta hai aur Tailwind kaafi modern aur customizable hai.
+
+5. Framer Motion
+- Kya hai: React me animations dalne ki library.
+- Kyu use kiya: App ko thoda professional aur smooth feel dene ke liye (jaise chat menu slide hona, buttons ka pop hona).
+
+6. PWA (Progressive Web App)
+- Kya hai: Kisi bhi website ko native Mobile/Desktop app me convert karne ki technology.
+- Kyu use kiya: Taaki user ko bar bar browser me URL na dalna pade, wo directly desktop shortcut se app open kar sake. Isse UX (User Experience) better hota hai.

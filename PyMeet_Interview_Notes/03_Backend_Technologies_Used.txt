@@ -1,0 +1,20 @@
+======================================================
+3. BACKEND TECHNOLOGIES (Server side ke tools)
+======================================================
+
+1. FastAPI (Python Framework)
+- Kya hai: Ye ek modern aur fast web framework hai jo Python me APIs banane ke kaam aata hai.
+- Kyu use kiya: Normal log Django ya Flask use karte hain. Par FastAPI unse kafi gunah tez (fast) hai kyunki ye async/await support karta hai (NodeJS ki tarah). Sath hi, ye automatic "Swagger UI" (API documentation) generate kar deta hai jisse testing aasan hoti hai.
+- Interview me bolne ka point: "FastAPI Pydantic ka use karta hai data validation ke liye, jisse API me galat data aane ke chances khatam ho jate hain."
+
+2. SQLAlchemy (ORM)
+- Kya hai: ORM matlab Object-Relational Mapper. Iski madad se hume SQL queries (jaise SELECT * FROM users) hath se nahi likhni padti. Hum Python ka code likhte hain aur ORM usey SQL me convert kar deta hai.
+- Kyu use kiya: Database security (SQL Injection se bachne) aur code ko clean rakhne ke liye.
+
+3. Uvicorn
+- Kya hai: Ye ASGI (Asynchronous Server Gateway Interface) server hai.
+- Kyu use kiya: FastAPI ko run karne ke liye ek server chahiye hota hai jo high traffic handle kar sake. Uvicorn sabse best aur fast server hai Python APIs ke liye.
+
+4. Python-SocketIO
+- Kya hai: Ye WebSockets implement karne ki library hai. Normal APIs (REST) one-way hote hain (User request bhejta hai, server reply karta hai). Par video calling me hume real-time connect rehna padta hai.
+- Kyu use kiya: Jab ek naya user room join karta hai, toh baki sabko turant pata chal jana chahiye bina page refresh kiye. Ye jaadu Socket.io karta hai.

@@ -1,0 +1,23 @@
+======================================================
+5. DATABASE & SECURITY (Data aur Hackers se bachav)
+======================================================
+
+1. Database (PostgreSQL / SQLite)
+- Kya hai: Hamare app ka memory card jahan Users, Meetings ki detail save hoti hain.
+- Kyu use kiya: Development ke time SQLIte use kiya hai (kyunki ye lightweight hai). Production me PostgreSQL ka use hota hai kyunki wo hazaro connections ek sath handle kar sakta hai.
+
+2. JWT (JSON Web Tokens)
+- Kya hai: Ye hamari app ka Entry Pass (Ticket) hai.
+- Kyu use kiya: Jab user login karta hai, toh backend ek lambi encrypted string (Token) deta hai. User us token ko frontend ki LocalStorage me save rakhta hai. Agli baar jab user website kholta hai, toh use dobara password nahi dalna padta, wo is token se andar aa jata hai. Isse baar baar database par load nahi padta aur process fast rehta hai.
+
+3. bcrypt (Password Security)
+- Kya hai: Password ko encrypt karne ka tool.
+- Kyu use kiya: Agar database hack bhi ho jaye, toh hackers ko password nahi milega kyunki password `abc123` ki jagah ek complex text `$2b$12$l...` me save hota hai jise decrypt karna lagbhag namumkin hai. Is process ko Password Hashing kehte hain.
+
+4. AES Encryption (Project Locker Script)
+- Kya hai: Advanced Encryption Standard (AES) ka use karke hamne `project_locker.py` banayi thi.
+- Kyu use kiya: Taaki aap agar ye code kisi aur ke computer par share karein, toh wo aapke password ke bina code chala ya padh na sake.
+
+5. CORS & Security Headers
+- Kya hai: Cross-Origin Resource Sharing. Ye batata hai ki kaunsi websites hamare backend se data le sakti hain.
+- Humne Helmet-like custom headers daale (Strict-Transport-Security, X-Frame-Options) taaki clickjacking ya XSS attacks na ho sakein.

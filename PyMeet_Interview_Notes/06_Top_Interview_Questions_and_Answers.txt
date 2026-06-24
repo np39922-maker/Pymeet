@@ -1,0 +1,25 @@
+======================================================
+6. TOP INTERVIEW QUESTIONS (Aur unke Answers)
+======================================================
+
+Q1: Aapne backend me Node.js ki jagah Python/FastAPI kyu chuna?
+A: FastAPI kaafi fast hai kyunki ye asynchronous hai (asyncio). Sath hi, mujhe Pydantic ki wajah se auto data validation mil gaya aur Swagger docs apne aap generate ho gaye. Ye development speed badhata hai aur Python AI integration (agar future me add karna ho) ke liye best hai.
+
+Q2: WebRTC me TURN aur STUN servers kya hote hain?
+A: STUN server ka kaam sirf hamara Public IP Address pata karna hota hai taaki do browsers direct connect ho sakein. Lekin jab do log bahut heavy firewall ya corporate network ke peeche hote hain (jahan direct connection allow nahi hota), tab connection fail na ho, isliye hum TURN server use karte hain, jo video data ko pass karvata hai (ek relay ki tarah). 
+
+Q3: Aapne Socket.io use kiya, normal WebSockets kyu nahi?
+A: Normal WebSockets low-level hote hain jisme connection tutne par khud code likhna padta hai wapas connect karne ke liye. Socket.io me auto-reconnect, fallback polling (agar websocket block ho) aur "Rooms" (jaise meeting room) banane ka feature inbuilt hota hai. Isse code chhota aur reliable banta hai.
+
+Q4: Agar bahut saare log ek room me aa jayein toh kya hoga?
+A: WebRTC Peer-to-Peer mesh topology par kaam karta hai. Matlab agar 5 log hain, toh ek device ko 4 logon ko apna video upload karna padega aur 4 logon se download karna padega. Isliye browser-based WebRTC me limit hoti hai (usually 10-15 users). Isko badhane ke liye SFU (Selective Forwarding Unit) server lagana padega jo aage ka next-step upgrade ho sakta hai.
+
+Q5: Aapne isme security kaise maintain ki?
+A: 
+1. Database passwords hash karke (bcrypt) rakhe gaye hain.
+2. API auth JWT tokens se ho rahi hai taaki session secure rahe.
+3. WebRTC default end-to-end encrypted (DTLS/SRTP) hota hai, toh video stream koi beech me hack nahi kar sakta.
+4. XSS and framing rokne ke liye strict HTTP Security Headers lagaye gaye hain.
+
+Q6: Agar mujhe is code me contribute karna ho toh frontend kaise samjhu?
+A: Frontend React me bana hai. "src/pages" me main screens hain (jaise Dashboard, MeetingRoom). "src/context" me global state (Auth aur Theme) hai. Aur real-time communication ka sara logic `useWebRTC` custom hook aur "src/services/api.ts" me rakha gaya hai taaki UI components clean rahein.

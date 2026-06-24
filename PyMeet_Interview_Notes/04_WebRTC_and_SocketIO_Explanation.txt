@@ -1,0 +1,22 @@
+======================================================
+4. WEBRTC & SOCKET.IO (Project ki Backbone)
+======================================================
+
+Ye sabse important part hai, interviewer zarur puchega!
+
+WebRTC (Web Real-Time Communication) kya hai?
+Normal videos YouTube par chalti hain toh aapka phone Google ke server se video download karta hai. Isme delay lagta hai.
+Lekin Video Calling me delay nahi hona chahiye. WebRTC ek aisi technology hai jo 2 browsers (Aap aur aapka dost) ke beech ek "Direct Tunnel" (Peer-to-Peer connection) bana deti hai. Isme video hamare server par jati hi nahi hai, direct aapke dost ke browser me jati hai. Isse speed ultra-fast rehti hai.
+
+Socket.IO ki zarurat kyu padi jab WebRTC tha?
+WebRTC 2 logo ko direct jodh toh deta hai, par unhe ek dusre ko dhundhna padta hai (Signal bhejna padta hai). 
+Aapka IP Address kya hai? Aapka camera on hai ya off? Ye jankari "Socket.IO" ke zariye hamara backend pass karta hai.
+Jab dono logo ko ek dusre ki details Socket.IO se mil jati hain, toh WebRTC unka aapas me video connection direct connect kar deta hai. Is process ko "Signaling" kehte hain.
+
+Signaling ka Process (Interview me samjhane ke liye):
+1. User A meeting me aata hai aur Socket.IO ko batata hai "Main aa gaya" (join-room event).
+2. User B meeting me aata hai, Socket.IO User A ko batata hai ki ek naya user aaya hai.
+3. User A ek "Offer" (WebRTC connection invite) bhejta hai User B ko via Socket.IO.
+4. User B us "Offer" ko accept karke "Answer" bhejta hai.
+5. Fir dono apne network ka address exchange karte hain (jise ICE Candidates kehte hain).
+6. Connection bante hi video flow shuru ho jata hai bina server me video gaye!
