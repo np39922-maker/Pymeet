@@ -14,6 +14,13 @@ import { SchedulerDashboard } from "./pages/SchedulerDashboard";
 import { PublicBookingPage } from "./pages/PublicBookingPage";
 import "./index.css";
 
+// Register PWA Service Worker
+if ('serviceWorker' in navigator) {
+  import('virtual:pwa-register').then(({ registerSW }) => {
+    registerSW({ immediate: true });
+  }).catch(() => {});
+}
+
 function Protected({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;

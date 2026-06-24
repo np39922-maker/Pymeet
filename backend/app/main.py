@@ -21,7 +21,11 @@ try:
 except Exception as e:
     print(f"Error updating schema: {e}")
 
-fastapi_app = FastAPI(title=settings.app_name, version="1.0.0")
+fastapi_app = FastAPI(
+    title=f"{settings.app_name} - Developed by Nishant Panwar", 
+    version="1.0.0",
+    description="Backend Project created and secured by Nishant Panwar"
+)
 fastapi_app.state.limiter = limiter
 fastapi_app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -33,6 +37,8 @@ async def security_headers_middleware(request: Request, call_next):
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Content-Security-Policy"] = "default-src 'self'"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["X-Developer"] = "Nishant Panwar"
+    response.headers["X-Project-Owner"] = "Nishant Panwar"
     return response
 
 fastapi_app.add_middleware(
@@ -49,7 +55,12 @@ fastapi_app.include_router(scheduler.router)
 
 @fastapi_app.get("/api/health", tags=["System"])
 def health():
-    return {"status": "ok", "service": settings.app_name}
+    return {
+        "status": "ok", 
+        "service": settings.app_name, 
+        "developer": "Nishant Panwar",
+        "security": "Encrypted & Secured by Nishant Panwar"
+    }
 
 
 app = socketio.ASGIApp(sio, other_asgi_app=fastapi_app, socketio_path="socket.io")

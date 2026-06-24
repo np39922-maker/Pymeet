@@ -91,6 +91,7 @@ function ControlButton({ icon: Icon, label, active, danger, onClick, badge, anim
 export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled, screenSharing, recordingState = "idle", unreadChatCount = 0, unreadParticipantsCount = 0, showReactions, onToggleMic, onToggleCamera, onShareScreen, onToggleRecord, onToggleChat, onToggleParticipants, onToggleReactions, onToggleWhiteboard, onLeave, onReact, currentBgType, currentBgSrc, onUpdateBackground }: any) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showBgPicker, setShowBgPicker] = useState(false);
+  const [failedEmojis, setFailedEmojis] = useState<Set<string>>(new Set());
   const emojis = ["👍", "❤️", "😂", "😮", "👏", "🎉"];
   
   const ANIMATED_EMOJIS: Record<string, string> = {
@@ -157,19 +158,24 @@ export function MeetingControls({ localStream, isHost, micEnabled, cameraEnabled
 
       {/* Popovers attached to the root of MeetingControls */}
       {showReactions && (
-        <div className="pointer-events-auto absolute bottom-[100px] left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-3xl border border-line bg-slate-900/95 p-3 shadow-2xl backdrop-blur-xl z-50">
+        <div className="pointer-events-auto absolute bottom-[100px] left-1/2 flex -translate-x-1/2 items-center gap-1 sm:gap-2 rounded-3xl border border-line bg-slate-900/95 p-2 sm:p-3 shadow-2xl backdrop-blur-xl z-50">
           {emojis.map((emoji) => (
-            <button key={emoji} onClick={() => { onReact(emoji); setShowEmojiPicker(false); }} className="transform rounded-full p-2 transition hover:scale-125 hover:bg-white/10 active:scale-95 group">
-              {ANIMATED_EMOJIS[emoji] ? (
-                <img src={ANIMATED_EMOJIS[emoji]} alt={emoji} className="w-12 h-12 sm:w-10 sm:h-10 object-contain drop-shadow-md group-hover:drop-shadow-xl" />
+            <button key={emoji} onClick={() => { onReact(emoji); setShowEmojiPicker(false); }} className="shrink-0 transform rounded-full p-1.5 sm:p-2 transition hover:scale-125 hover:bg-white/10 active:scale-95 group">
+              {ANIMATED_EMOJIS[emoji] && !failedEmojis.has(emoji) ? (
+                <img 
+                  src={ANIMATED_EMOJIS[emoji]} 
+                  alt={emoji} 
+                  className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-md group-hover:drop-shadow-xl text-3xl" 
+                  onError={() => setFailedEmojis(prev => new Set(prev).add(emoji))}
+                />
               ) : (
-                <span className="text-4xl sm:text-3xl">{emoji}</span>
+                <span className="text-3xl sm:text-4xl">{emoji}</span>
               )}
             </button>
           ))}
-          <div className="w-px h-10 bg-white/10 mx-1"></div>
-          <button onClick={() => setShowEmojiPicker((v) => !v)} className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 text-cyan-400 transition hover:scale-110 hover:bg-slate-700 active:scale-95 border border-slate-700">
-            <Plus size={24} />
+          <div className="shrink-0 w-px h-8 sm:h-10 bg-white/10 mx-1"></div>
+          <button onClick={() => setShowEmojiPicker((v) => !v)} className="shrink-0 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-slate-800 text-cyan-400 transition hover:scale-110 hover:bg-slate-700 active:scale-95 border border-slate-700">
+            <Plus size={20} className="sm:w-6 sm:h-6" />
           </button>
         </div>
       )}

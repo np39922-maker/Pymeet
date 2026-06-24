@@ -1,5 +1,7 @@
 # PyMeet - Zoom Clone
 
+**Developed and Secured by Nishant Panwar**
+
 PyMeet is a production-style video conferencing application built with FastAPI, SQLAlchemy, JWT auth, Socket.IO signaling, React, TypeScript, TailwindCSS, Framer Motion, and the browser WebRTC APIs.
 
 ## Features

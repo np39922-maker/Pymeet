@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { useState, useEffect, useRef } from "react";
 import { ProfileSettings } from "./ProfileSettings";
+import { InstallPWA } from "./InstallPWA";
 import { meetingApi } from "../services/api";
 import type { Meeting } from "../types";
 
@@ -62,6 +63,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <InstallPWA />
           <button 
             onClick={toggleTheme} 
             className="rounded-full p-2 hover:bg-white/10 transition-all text-2xl drop-shadow-lg"

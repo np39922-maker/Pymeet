@@ -19,6 +19,8 @@ const ANIMATED_EMOJIS: Record<string, string> = {
 };
 
 export function ReactionsOverlay({ reactions }: { reactions: Reaction[] }) {
+  const [failedEmojis, setFailedEmojis] = useState<Set<string>>(new Set());
+
   return (
     <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
       <AnimatePresence>
@@ -36,11 +38,12 @@ export function ReactionsOverlay({ reactions }: { reactions: Reaction[] }) {
             className="absolute bottom-0 text-7xl sm:text-6xl drop-shadow-lg flex flex-col items-center"
             style={{ left: `${r.left}vw` }}
           >
-            {ANIMATED_EMOJIS[r.emoji] ? (
+            {ANIMATED_EMOJIS[r.emoji] && !failedEmojis.has(r.emoji) ? (
               <img 
                 src={`https://fonts.gstatic.com/s/e/notoemoji/latest/${ANIMATED_EMOJIS[r.emoji]}/512.gif`} 
                 alt={r.emoji} 
                 className="w-24 h-24 sm:w-20 sm:h-20 drop-shadow-2xl" 
+                onError={() => setFailedEmojis(prev => new Set(prev).add(r.emoji))}
               />
             ) : (
               r.emoji
